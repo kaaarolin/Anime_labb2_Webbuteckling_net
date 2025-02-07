@@ -15,7 +15,7 @@ namespace Anime_labb2.Data
             db = client.GetDatabase(database);
         }
 
-        // 🔹 ADD: Lägg till anime
+        // Add anime
         public async Task<List<Animes>> AddAnime(string table, Animes anime)
         {
             var collection = db.GetCollection<Animes>(table);
@@ -23,21 +23,21 @@ namespace Anime_labb2.Data
             return collection.AsQueryable().ToList();
         }
 
-        // 🔹 GET ALL: Hämta alla anime
+        // Get all anime
         public async Task<List<Animes>> GetAllAnime(string table)
         {
             var collection = db.GetCollection<Animes>(table);
             return await collection.AsQueryable().ToListAsync();
         }
 
-        // 🔹 FIXAD GET BY ID: Hämta anime via ID (använder ObjectId)
+        // Get anime by id
         public async Task<Animes> GetAnimeById(string table, ObjectId id)
         {
             var collection = db.GetCollection<Animes>(table);
             return await collection.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        // 🔹 FIXAD UPDATE: Uppdatera anime (använder ObjectId)
+        // Update anime by id 
         public async Task<Animes> UpdateAnime(string table, Animes anime)
         {
             var collection = db.GetCollection<Animes>(table);
@@ -45,7 +45,7 @@ namespace Anime_labb2.Data
             return anime;
         }
 
-        // 🔹 FIXAD DELETE: Ta bort anime via ID (använder ObjectId)
+        // delete anime by id 
         public async Task<string> DeleteAnime(string table, ObjectId id)
         {
             var collection = db.GetCollection<Animes>(table);

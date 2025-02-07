@@ -12,7 +12,6 @@ namespace Anime_labb2
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddAuthorization();
 
             // Swagger för API-dokumentation
@@ -23,7 +22,6 @@ namespace Anime_labb2
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -92,4 +90,3 @@ namespace Anime_labb2
         }
     }
 }
-//

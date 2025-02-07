@@ -7,11 +7,11 @@ namespace Anime_labb2.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId Id { get; set; }  // 🔹 Ändrat från `string` till `ObjectId`
 
-        public string Id { get; set; }
         public string Name { get; set; }
         public string Genre { get; set; }
-        public string ReleaseYear { get; set; }
-        public string Rating { get; set; }
+        public int ReleaseYear { get; set; }  // 🔹 Ändrat från `string` till `int`
+        public string Rating { get; set; }  // 🔹 Ändrat från `string` till `double`
     }
 }

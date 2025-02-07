@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anime_labb2", "Anime_labb2\Anime_labb2.csproj", "{DBE756D5-4F0E-4BA2-83D1-AD58D9212EB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anime_labb2", "Anime_labb2\Anime_labb2.csproj", "{DBE756D5-4F0E-4BA2-83D1-AD58D9212EB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

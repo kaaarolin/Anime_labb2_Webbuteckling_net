@@ -1,7 +1,8 @@
-
 using Anime_labb2.Data;
 using Anime_labb2.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace Anime_labb2
 {
@@ -14,7 +15,7 @@ namespace Anime_labb2
             // Add services to the container.
             builder.Services.AddAuthorization();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Swagger för API-dokumentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -30,30 +31,31 @@ namespace Anime_labb2
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-            // Post metod 
-
-            app.MapPost("/anime", async (Animes anime) =>
+            // POST - Lägg till anime
+            app.MapPost("/anime", async ([FromBody] Animes anime) =>
             {
                 var animeToAdd = await db.AddAnime("Anime", anime);
                 return Results.Ok(animeToAdd);
-            });
+            }).WithName("AddAnime").WithOpenApi();
 
-            // Get all metod 
-
+            // GET - Hämta alla anime
             app.MapGet("/animes", async () =>
             {
                 var anime = await db.GetAllAnime("Anime");
                 return Results.Ok(anime);
-            });
+            }).WithName("GetAllAnimes").WithOpenApi();
 
-            // Get by id method 
-
+            // GET - Hämta anime med ID
             app.MapGet("/anime/{id}", async (string id) =>
             {
-                var anime = await db.GetAnimeById("Anime", id);
+                if (!ObjectId.TryParse(id, out ObjectId objectId))
+                {
+                    return Results.BadRequest("Invalid ID format");
+                }
+
+                var anime = await db.GetAnimeById("Anime", objectId);
 
                 if (anime == null)
                 {
@@ -63,21 +65,28 @@ namespace Anime_labb2
                 return Results.Ok(anime);
             });
 
-            // Update method 
 
-            app.MapPut("/anime", async (Animes UpdateAnime) =>
+            // PUT - Uppdatera anime
+            app.MapPut("/anime", async ([FromBody] Animes updateAnime) =>
             {
-                var anime = await db.UpdateAnime("Anime", UpdateAnime);
+                var anime = await db.UpdateAnime("Anime", updateAnime);
                 return Results.Ok(anime);
-            });
+            }).WithName("UpdateAnime").WithOpenApi();
 
-            // Delete method 
-
+            // DELETE - Ta bort anime
             app.MapDelete("/anime/{id}", async (string id) =>
             {
-                var animeToDelete = await db.DeleteAnime("Anime", id);
-                return Results.Ok(animeToDelete);
-            });
+                try
+                {
+                    var objectId = ObjectId.Parse(id);
+                    var animeToDelete = await db.DeleteAnime("Anime", objectId);
+                    return Results.Ok(animeToDelete);
+                }
+                catch (Exception)
+                {
+                    return Results.BadRequest("Invalid ID format");
+                }
+            }).WithName("DeleteAnime").WithOpenApi();
 
             app.Run();
         }

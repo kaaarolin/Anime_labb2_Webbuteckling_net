@@ -11,7 +11,7 @@ namespace Anime_labb2.Data
 
         public MongoCRUD(string database)
         {
-            var client = new MongoClient();
+            var client = new MongoClient("mongodb+srv://123:123@school.37vmr.mongodb.net/AnimeList?retryWrites=true&w=majority&appName=School");
             db = client.GetDatabase(database);
         }
 

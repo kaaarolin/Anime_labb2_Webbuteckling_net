@@ -50,20 +50,16 @@ namespace Anime_labb2
             // GET - Hämta anime med ID
             app.MapGet("/anime/{id}", async (string id) =>
             {
-                if (!ObjectId.TryParse(id, out ObjectId objectId))
-                {
-                    return Results.BadRequest("Invalid ID format");
-                }
-
-                var anime = await db.GetAnimeById("Anime", objectId);
+                var anime = await db.GetAnimeById("Anime", id); 
 
                 if (anime == null)
                 {
-                    return Results.NotFound("Error: this anime does not exist");
+                    return Results.NotFound("Error: This anime does not exist");
                 }
 
                 return Results.Ok(anime);
             });
+
 
 
             // PUT - Uppdatera anime
@@ -76,17 +72,16 @@ namespace Anime_labb2
             // DELETE - Ta bort anime
             app.MapDelete("/anime/{id}", async (string id) =>
             {
-                try
+                var animeToDelete = await db.DeleteAnime("Anime", id);
+
+                if (animeToDelete == "Anime not found.")
                 {
-                    var objectId = ObjectId.Parse(id);
-                    var animeToDelete = await db.DeleteAnime("Anime", objectId);
-                    return Results.Ok(animeToDelete);
+                    return Results.NotFound("Error: Anime not found.");
                 }
-                catch (Exception)
-                {
-                    return Results.BadRequest("Invalid ID format");
-                }
+
+                return Results.Ok(animeToDelete);
             }).WithName("DeleteAnime").WithOpenApi();
+
 
             app.Run();
         }

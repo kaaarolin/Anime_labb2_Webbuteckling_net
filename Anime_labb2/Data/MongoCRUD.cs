@@ -31,7 +31,7 @@ namespace Anime_labb2.Data
         }
 
         // Get anime by id
-        public async Task<Animes> GetAnimeById(string table, ObjectId id)
+        public async Task<Animes> GetAnimeById(string table, string id)
         {
             var collection = db.GetCollection<Animes>(table);
             return await collection.Find(p => p.Id == id).FirstOrDefaultAsync();
@@ -46,7 +46,7 @@ namespace Anime_labb2.Data
         }
 
         // delete anime by id 
-        public async Task<string> DeleteAnime(string table, ObjectId id)
+        public async Task<string> DeleteAnime(string table, string id)
         {
             var collection = db.GetCollection<Animes>(table);
             var result = await collection.DeleteOneAsync(p => p.Id == id);

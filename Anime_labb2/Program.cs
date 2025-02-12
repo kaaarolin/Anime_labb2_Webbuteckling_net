@@ -28,6 +28,8 @@ namespace Anime_labb2
                 app.UseSwaggerUI();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseHttpsRedirection();
             app.UseAuthorization();
 
